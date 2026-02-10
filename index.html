@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Green Light — производство промышленных и офисных светильников. Высокая энергоэффективность, гарантия до 8 лет.">
+    <title>Green Light — Производство светильников</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">
+                    <img src="assets/images/logo.png" alt="Green Light">
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="#about">О компании</a></li>
+                    <li><a href="#advantages">Преимущества</a></li>
+                    <li><a href="pages/products.html">Продукция</a></li>
+                    <li><a href="pages/gallery.html">Галерея</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                </ul>
+                <button class="nav-toggle" aria-label="Меню">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Green Light</h1>
+                <p class="hero-subtitle">Зелёный Свет</p>
+                <p class="hero-text">Производство промышленных и офисных светильников с высокой энергоэффективностью</p>
+                <a href="#contacts" class="btn btn-primary">Связаться с нами</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="section-title">О компании</h2>
+            <div class="about-content">
+                <p>Green Light — дочерняя компания группы GSEG, специализирующаяся на производстве высококачественных промышленных и офисных светильников.</p>
+                <p>Мы предлагаем светотехнические решения, которые отвечают самым высоким стандартам энергоэффективности и надёжности.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages Section -->
+    <section id="advantages" class="section advantages">
+        <div class="container">
+            <h2 class="section-title">Наши преимущества</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <div class="advantage-icon">💡</div>
+                    <h3>Высокая эффективность</h3>
+                    <p>Наши светильники обладают одним из самых высоких показателей лм/Вт на рынке</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon">🛡️</div>
+                    <h3>Гарантия 5-8 лет</h3>
+                    <p>Мы уверены в качестве нашей продукции и предоставляем расширенную гарантию</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon">🏭</div>
+                    <h3>Собственное производство</h3>
+                    <p>Полный контроль качества на всех этапах производства</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Preview -->
+    <section class="section products-preview">
+        <div class="container">
+            <h2 class="section-title">Продукция</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3>Промышленные светильники</h3>
+                    <p>Решения для производственных помещений, складов и цехов</p>
+                </div>
+                <div class="product-card">
+                    <h3>Офисные светильники</h3>
+                    <p>Комфортное освещение для офисных пространств</p>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="pages/products.html" class="btn btn-secondary">Смотреть каталог</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacts Section -->
+    <section id="contacts" class="section contacts">
+        <div class="container">
+            <h2 class="section-title">Контакты</h2>
+            <div class="contacts-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h4>Адрес</h4>
+                        <p>141280, Московская область,<br>г. Ивантеевка, Студенческий проезд, д. 5А</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Телефон</h4>
+                        <p><a href="tel:">Уточняется</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Email</h4>
+                        <p><a href="mailto:info@gglim.ru">info@gglim.ru</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Реквизиты</h4>
+                        <p>ИНН: 5038195580<br>КПП: 503801001<br>ОКПО: 66922913</p>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <h3>Обратная связь</h3>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" name="phone" placeholder="Телефон">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Сообщение" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/images/logo.png" alt="Green Light">
+                    <p>Зелёный Свет</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://gseg.ru/" target="_blank" rel="noopener">GSEG</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Green Light. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
