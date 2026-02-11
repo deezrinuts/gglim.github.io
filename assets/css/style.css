@@ -107,9 +107,33 @@ img {
     height: var(--header-height);
 }
 
-.logo img {
-    height: 60px;
-    max-height: calc(var(--header-height) - 20px);
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    height: 50px;
+    width: auto;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.logo-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.logo-subtitle {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    font-style: italic;
 }
 
 .nav-menu {
@@ -146,84 +170,26 @@ img {
 
 /* ===== Hero Section ===== */
 .hero {
-    position: relative;
-    padding: 150px 0 100px;
+    padding: 120px 0 80px;
     min-height: 80vh;
     display: flex;
     align-items: center;
-    overflow: hidden;
-}
-
-.hero-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('../images/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: blur(8px);
-    transform: scale(1.1);
-    z-index: -2;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.85);
-    z-index: -1;
+    justify-content: center;
+    background-color: var(--color-white);
 }
 
 .hero-content {
-    max-width: 800px;
-}
-
-.hero-brand {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 30px;
-    margin-bottom: 30px;
 }
 
-.hero-logo {
-    flex-shrink: 0;
-}
-
-.hero-logo img {
-    width: 120px;
-    height: 120px;
+.hero-full-logo {
+    max-width: 100%;
+    max-height: 60vh;
+    width: auto;
+    height: auto;
     object-fit: contain;
-}
-
-.hero-titles {
-    display: flex;
-    flex-direction: column;
-}
-
-.hero h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: var(--color-primary);
-    margin-bottom: 5px;
-    line-height: 1.1;
-}
-
-.hero-subtitle {
-    font-size: 1.5rem;
-    color: var(--color-text-light);
-    font-style: italic;
-    margin: 0;
-}
-
-.hero-text {
-    font-size: 1.25rem;
-    color: var(--color-text);
-    margin-bottom: 30px;
 }
 
 /* ===== Sections ===== */
@@ -649,23 +615,12 @@ img {
         display: flex;
     }
     
-    .hero-brand {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
+    .logo-text {
+        display: none;
     }
     
-    .hero-logo img {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.25rem;
+    .hero-full-logo {
+        max-height: 40vh;
     }
     
     .section-title {
