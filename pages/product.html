@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Продукция Green Light — светодиодные светильники. Фото, описания, листовки.">
+    <title>Green Light — Продукция</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== ТАБЛИЦА ПРОДУКЦИИ: 4 КОЛОНКИ ===== */
+        .product-showcase {
+            padding: 40px 0 20px;
+        }
+        
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--color-white);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .product-table tbody tr {
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .product-table tbody tr:last-child {
+            border-bottom: none;
+        }
+        
+        .product-table td {
+            padding: 25px 20px;
+            vertical-align: middle;  /* выравнивание по центру */
+        }
+        
+        /* ----- 1-я колонка: изображение (горизонтальный А4, ширина увеличена в 1.5x) ----- */
+        .product-table td:first-child {
+            width: 240px;            /* ширина ячейки ~1.5× от стандартной */
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .product-image {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1.414 / 1;  /* горизонтальный А4 (297/210 = 1.414) */
+            background-color: #f0f3f5;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;        /* заполняет контейнер с обрезкой при необходимости */
+            display: block;
+        }
+        
+        .product-image-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background-color: #e9ecef;
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* ----- 2-я колонка: название (крупный шрифт) ----- */
+        .product-table td:nth-child(2) {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--color-text);
+            padding-left: 30px;       /* смещение от левого края */
+            padding-right: 15px;
+        }
+        
+        /* ----- 3-я колонка: описание (стандартный текст) ----- */
+        .product-table td:nth-child(3) {
+            font-size: 1rem;
+            color: var(--color-text-light);
+            line-height: 1.5;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        
+        /* ----- 4-я колонка: кнопка ----- */
+        .product-table td:nth-child(4) {
+            text-align: right;
+            padding-right: 30px;
+        }
+        
+        /* Кнопка скачивания листовки */
+        .btn-download {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+        
+        .btn-download:hover {
+            background-color: var(--color-primary-dark);
+            color: var(--color-white);
+        }
+        
+        .btn-download i {
+            margin-right: 8px;
+        }
+        
+        /* ----- Адаптация: планшеты ----- */
+        @media (max-width: 992px) {
+            .product-table td:first-child {
+                width: 180px;
+                min-width: 140px;
+            }
+            
+            .product-table td:nth-child(2) {
+                font-size: 1.5rem;
+                padding-left: 20px;
+            }
+            
+            .product-table td:nth-child(3) {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            
+            .btn-download {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* ----- Адаптация: мобильные (таблица превращается в блоки) ----- */
+        @media (max-width: 768px) {
+            .product-table,
+            .product-table tbody,
+            .product-table tr,
+            .product-table td {
+                display: block;
+            }
+            
+            .product-table tr {
+                padding: 20px 0;
+                border-bottom: 1px solid var(--color-border);
+            }
+            
+            .product-table td {
+                padding: 12px 20px !important;
+                width: 100% !important;
+                text-align: left !important;
+            }
+            
+            .product-table td:first-child {
+                width: 100% !important;
+            }
+            
+            .product-image {
+                max-width: 320px;      /* ограничение на мобильных */
+                margin: 0 auto 15px;
+            }
+            
+            .product-table td:nth-child(2),
+            .product-table td:nth-child(3),
+            .product-table td:nth-child(4) {
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+                text-align: left !important;
+            }
+            
+            .btn-download {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        
+        /* ===== Блок скачивания каталога ===== */
+        .catalog-download {
+            margin-top: 60px;
+            padding: 40px 30px;
+            background-color: var(--color-bg-light);
+            border-radius: 16px;
+            text-align: center;
+        }
+        
+        .catalog-download h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--color-text);
+        }
+        
+        .catalog-download p {
+            font-size: 1.1rem;
+            color: var(--color-text-light);
+            margin-bottom: 25px;
+        }
+        
+        .btn-catalog {
+            padding: 14px 42px;
+            font-size: 1.1rem;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn-catalog:hover {
+            background-color: var(--color-primary-dark);
+            color: var(--color-white);
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER (копия с главной) -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="../index.html" class="logo">
+                    <img src="../assets/images/logo-icon.png" alt="Green Light" class="logo-icon">
+                    <div class="logo-text">
+                        <span class="logo-title">Green Light</span>
+                        <span class="logo-subtitle">Зелёный Свет</span>
+                    </div>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="../index.html#about">О компании</a></li>
+                    <li><a href="../index.html#advantages">Преимущества</a></li>
+                    <li><a href="gallery.html">Галерея</a></li>
+                    <li><a href="product.html" class="active">Продукция</a></li>
+                    <li><a href="../index.html#contacts">Контакты</a></li>
+                </ul>
+                <button class="nav-toggle" aria-label="Меню">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- ЗАГОЛОВОК СТРАНИЦЫ -->
+        <div class="page-header">
+            <div class="container">
+                <h1>Продукция Green Light</h1>
+                <p style="color: var(--color-text-light); font-size: 1.2rem;">
+                    Светодиодные светильники для бизнеса и промышленности
+                </p>
+            </div>
+        </div>
+
+        <!-- ================================================= -->
+        <!--              ТАБЛИЦА ПРОДУКЦИИ (4 КОЛОНКИ)        -->
+        <!-- ================================================= -->
+        <section class="product-showcase">
+            <div class="container">
+                <!-- 
+                    *************************************************************
+                    **  РЕДАКТИРОВАНИЕ ДАННЫХ                                   **
+                    *************************************************************
+                    1. КАРТИНКА: замените .product-image-placeholder на <img src="..."> 
+                       (горизонтальное изображение, желательно с соотношением 1.414:1)
+                    2. НАЗВАНИЕ: текст во 2-й ячейке <td>
+                    3. ОПИСАНИЕ: в 3-й ячейке (можно сделать уникальным для каждого товара)
+                    4. ССЫЛКА НА ЛИСТОВКУ: атрибут href у .btn-download
+                    Для новой строки – копируйте целый блок <tr>
+                -->
+                <table class="product-table">
+                    <tbody>
+                        <!-- ТОВАР 1: арт. 80111011 -->
+                        <tr>
+                            <td>
+                                <div class="product-image">
+                                    <!-- EDIT: замените на реальное изображение -->
+                                    <!-- <img src="../assets/images/products/80111011.jpg" alt="PIPE_P 3000K"> -->
+                                    <div class="product-image-placeholder">
+                                        Горизонтальный А4<br>(заглушка)
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                PIPE_P MODULE<br>PRO LED 120 IP20 3000K
+                            </td>
+                            <td>
+                                Светодиодные светильники для бизнеса и промышленности
+                            </td>
+                            <td>
+                                <a href="../assets/leaflets/80111011.pdf" class="btn-download" download>
+                                    📥 Скачать листовку
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- ТОВАР 2: арт. 80111021 -->
+                        <tr>
+                            <td>
+                                <div class="product-image">
+                                    <!-- EDIT: замените на реальное изображение -->
+                                    <div class="product-image-placeholder">
+                                        Горизонтальный А4<br>(заглушка)
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                PIPE_P MODULE<br>PRO LED 120 IP20 4000K
+                            </td>
+                            <td>
+                                Светодиодные светильники для бизнеса и промышленности
+                            </td>
+                            <td>
+                                <a href="../assets/leaflets/80111021.pdf" class="btn-download" download>
+                                    📥 Скачать листовку
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- ТОВАР 3: арт. 81111011 -->
+                        <tr>
+                            <td>
+                                <div class="product-image">
+                                    <!-- EDIT: замените на реальное изображение -->
+                                    <div class="product-image-placeholder">
+                                        Горизонтальный А4<br>(заглушка)
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                PIPE_P MODULE deg 45<br>PRO LED 98x54 IP20 3000K
+                            </td>
+                            <td>
+                                Светодиодные светильники для бизнеса и промышленности
+                            </td>
+                            <td>
+                                <a href="../assets/leaflets/81111011.pdf" class="btn-download" download>
+                                    📥 Скачать листовку
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- ТОВАР 4: арт. 81111021 -->
+                        <tr>
+                            <td>
+                                <div class="product-image">
+                                    <!-- EDIT: замените на реальное изображение -->
+                                    <div class="product-image-placeholder">
+                                        Горизонтальный А4<br>(заглушка)
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                PIPE_P MODULE deg 45<br>PRO LED 98x54 IP20 4000K
+                            </td>
+                            <td>
+                                Светодиодные светильники для бизнеса и промышленности
+                            </td>
+                            <td>
+                                <a href="../assets/leaflets/81111021.pdf" class="btn-download" download>
+                                    📥 Скачать листовку
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- НЕБОЛЬШОЙ КОММЕНТАРИЙ (опционально) -->
+                <p style="text-align: right; font-size: 0.9rem; color: var(--color-text-light); margin-top: 20px;">
+                    * Актуальные характеристики и цены – в листовках и полном каталоге.
+                </p>
+
+                <!-- ===== БЛОК СКАТИРОВАНИЯ ПОЛНОГО КАТАЛОГА ===== -->
+                <div class="catalog-download">
+                    <h3>Полный каталог продукции</h3>
+                    <p>Все серии, фотографии, чертежи и инструкции в одном PDF.</p>
+                    <a href="../assets/catalog/greenlight_full_catalog.pdf" class="btn-catalog" download>
+                        📇 Скачать каталог (PDF, 8.2 МБ)
+                    </a>
+                    <!-- EDIT: замените ссылку на файл каталога и размер -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER (копия с главной) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <!-- можно разместить логотип -->
+                </div>
+                <div class="footer-links">
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Green Light. Все права защищены.</p>
+                <a href="privacy.html" class="privacy-link">Политика конфиденциальности</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Подключаем общий JS (меню, плавный скролл) -->
+    <script src="../assets/js/main.js"></script>
+    
+    <!-- Подсветка активного пункта меню -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = 'product.html';
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href').includes(currentPage)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
