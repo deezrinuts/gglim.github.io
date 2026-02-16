@@ -105,24 +105,33 @@
                         <p>ИНН: 5038195580<br>КПП: 503801001<br>ОКПО: 66922913</p>
                     </div>
                 </div>
-                <div class="contact-form-wrapper">
-                    <h3>Обратная связь</h3>
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <input type="text" name="name" placeholder="Ваше имя" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" name="email" placeholder="Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" name="phone" placeholder="Телефон">
-                        </div>
-                        <div class="form-group">
-                            <textarea name="message" placeholder="Сообщение" rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Отправить</button>
-                    </form>
-                </div>
+	<div class="contact-form-wrapper">
+   	 <h3>Обратная связь</h3>
+    <!-- Добавим action="send.php" и method="POST" -->
+  	  <form class="contact-form" id="contactForm" action="send.php" method="POST">
+        <!-- Защита от ботов: скрытое поле (не заполнять) -->
+        <div style="position: absolute; left: -9999px;">
+            <label for="website">Не заполняйте это поле</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="name" placeholder="Ваше имя *" required>
+        </div>
+        <div class="form-group">
+            <input type="email" name="email" placeholder="Email *" required>
+        </div>
+        <div class="form-group">
+            <input type="tel" name="phone" placeholder="Телефон">
+        </div>
+        <div class="form-group">
+            <textarea name="message" placeholder="Сообщение *" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+    <!-- Блок для отображения результата отправки -->
+  				  <div id="formMessage" style="margin-top: 15px; font-weight: 500;"></div>
+				</div>
             </div>
         </div>
     </section>
@@ -144,5 +153,42 @@
     </footer>
 
     <script src="assets/js/main.js"></script>
+    <!-- СКРИПТ ДЛЯ АСИНХРОННОЙ ОТПРАВКИ ФОРМЫ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault(); // отключаем стандартную отправку
+
+        const formData = new FormData(form);
+        const messageDiv = document.getElementById('formMessage');
+        messageDiv.textContent = 'Отправка...';
+        messageDiv.style.color = 'var(--color-primary)';
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json(); // ответ от send.php
+
+            if (result.success) {
+                messageDiv.textContent = '✅ Спасибо! Сообщение отправлено.';
+                messageDiv.style.color = '#28a745';
+                form.reset(); // очищаем поля
+            } else {
+                messageDiv.textContent = '❌ Ошибка: ' + result.error;
+                messageDiv.style.color = '#dc3545';
+            }
+        } catch (error) {
+            messageDiv.textContent = '❌ Ошибка соединения. Попробуйте позже.';
+            messageDiv.style.color = '#dc3545';
+        }
+    });
+});
+</script>
 </body>
 </html>

@@ -18,31 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Contact form handling
-    const contactForm = document.getElementById('contactForm');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData);
-            
-            // Create mailto link
-            const subject = encodeURIComponent('Запрос с сайта Green Light');
-            const body = encodeURIComponent(
-                `Имя: ${data.name}\n` +
-                `Email: ${data.email}\n` +
-                `Телефон: ${data.phone || 'Не указан'}\n\n` +
-                `Сообщение:\n${data.message}`
-            );
-            
-            window.location.href = `mailto:info@gglim.ru?subject=${subject}&body=${body}`;
-            
-            alert('Спасибо за обращение! Откроется почтовый клиент для отправки письма.');
-        });
-    }
-    
+   
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
