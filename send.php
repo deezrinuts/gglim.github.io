@@ -40,6 +40,10 @@ if (empty($message) || strlen($message) < 5) {
     $errors[] = 'Напишите сообщение (минимум 5 символов)';
 }
 
+if (!isset($_POST['privacy_agree'])) {
+    echo json_encode(['success' => false, 'error' => 'Необходимо подтвердить согласие на обработку данных']);
+    exit;
+}
 if (!empty($errors)) {
     echo json_encode(['success' => false, 'error' => implode('. ', $errors)]);
     exit;

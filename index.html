@@ -94,7 +94,7 @@
                     </div>
                     <div class="contact-item">
                         <h4>Телефон</h4>
-                        <p><a href="tel:">Уточняется</a></p>
+                        <p><a href="tel:">+7(495)532-08-81</a></p>
                     </div>
                     <div class="contact-item">
                         <h4>Email</h4>
@@ -128,6 +128,14 @@
             <textarea name="message" placeholder="Сообщение *" rows="4" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Отправить</button>
+        <form class="contact-form" id="contactForm" action="send.php" method="POST">
+    <div class="form-group checkbox-group" style="margin: 15px 0; display: flex; align-items: flex-start; gap: 10px;">
+        <input type="checkbox" id="privacy_agree" name="privacy_agree" required style="width: auto; margin-top: 5px;">
+        <label for="privacy_agree" style="font-size: 0.85rem; color: var(--color-text-light); line-height: 1.4;">
+            Я согласен на обработку моих <a href="pages/privacy.html" target="_blank" style="color: var(--color-primary);">персональных данных</a> в соответствии с политикой конфиденциальности. *
+        </label>
+    </div>
+
     </form>
     <!-- Блок для отображения результата отправки -->
   				  <div id="formMessage" style="margin-top: 15px; font-weight: 500;"></div>
