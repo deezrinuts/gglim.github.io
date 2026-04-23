@@ -11,6 +11,7 @@ Thumbs.db
 # Temp files
 *.tmp
 *.bak
+config.php
 
 # Node (if added later)
 node_modules/
