@@ -22,9 +22,18 @@ try {
     $mail->Host       = $config['smtp_host'];
     $mail->SMTPAuth   = true;
     $mail->Username   = $config['smtp_user'];
-    $mail->Password   = $config['smtp_pass']; // Теперь пароль берется из конфига
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port       = $config['smtp_port'];
+    $mail->Password   = $config['smtp_pass'];
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; 
+    $mail->Port       = 465;
+    $mail->SMTPOptions = array(
+    'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+    )
+);
+
+$mail->CharSet = 'UTF-8';
 
     $mail->setFrom('info@gglim.ru', 'Green Light Website');
     $mail->addAddress('info@gglim.ru');
