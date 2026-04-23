@@ -1,4 +1,5 @@
 <?php
+$config = require 'config.php';
 // 1. ВКЛЮЧАЕМ ОШИБКИ ДЛЯ ТЕСТА
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -18,10 +19,12 @@ $mail = new PHPMailer(true);
 try {
     // Настройки для локального сервера (раз MX ведет на email.gglim.ru)
     $mail->isSMTP();
-    $mail->Host       = 'localhost'; 
-    $mail->SMTPAuth   = false;
-    $mail->Port       = 25;
-    $mail->CharSet    = 'UTF-8';
+    $mail->Host       = $config['smtp_host'];
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $config['smtp_user'];
+    $mail->Password   = $config['smtp_pass']; // Теперь пароль берется из конфига
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port       = $config['smtp_port'];
 
     $mail->setFrom('info@gglim.ru', 'Green Light Website');
     $mail->addAddress('info@gglim.ru');
