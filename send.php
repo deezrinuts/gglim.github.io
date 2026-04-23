@@ -1,76 +1,55 @@
 <?php
-// send.php — обработчик формы обратной связи
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// 1. Подключаем библиотеку (проверьте путь к папке!)
+require 'phpmailer/src/Exception.php';
+require 'phpmailer/src/PHPMailer.php';
+require 'phpmailer/src/SMTP.php';
+
 header('Content-Type: application/json; charset=utf-8');
 
-// Настройки
-$mail->isSMTP();
-$mail->Host       = 'localhost';
-$mail->SMTPAuth   = false; // Отключаем авторизацию для теста
-$mail->SMTPAutoTLS = false; 
-$mail->Port       = 25; 
-
-$mail->setFrom('info@gglim.ru', 'Green Light Website');
-$mail->addAddress('info@gglim.ru');
-
-// 1. Проверка метода запроса
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'error' => 'Неверный метод запроса']);
+    echo json_encode(['success' => false, 'error' => 'Неверный метод']);
     exit;
 }
 
-// 2. Honeypot — защита от ботов (если поле заполнено — это бот)
-if (!empty($_POST['website'])) {
-    // Бот — тихо выходим
-    echo json_encode(['success' => false, 'error' => 'Обнаружен спам-бот']);
-    exit;
-}
-
-// 3. Получаем и чистим данные
+// 2. Валидация данных
 $name = trim(strip_tags($_POST['name'] ?? ''));
 $email = trim(strip_tags($_POST['email'] ?? ''));
-$phone = trim(strip_tags($_POST['phone'] ?? ''));
 $message = trim(strip_tags($_POST['message'] ?? ''));
+$phone = trim(strip_tags($_POST['phone'] ?? ''));
 
-// 4. Валидация
-$errors = [];
-
-if (empty($name) || strlen($name) < 2) {
-    $errors[] = 'Укажите имя (минимум 2 символа)';
-}
-
-if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors[] = 'Укажите корректный email';
-}
-
-if (empty($message) || strlen($message) < 5) {
-    $errors[] = 'Напишите сообщение (минимум 5 символов)';
-}
-
-if (!isset($_POST['privacy_agree'])) {
-    echo json_encode(['success' => false, 'error' => 'Необходимо подтвердить согласие на обработку данных']);
-    exit;
-}
-if (!empty($errors)) {
-    echo json_encode(['success' => false, 'error' => implode('. ', $errors)]);
+if (empty($name) || empty($email) || empty($message) || !isset($_POST['privacy_agree'])) {
+    echo json_encode(['success' => false, 'error' => 'Заполните все поля и дайте согласие']);
     exit;
 }
 
-// 5. Формируем тело письма
-$body = "Имя: $name\n";
-$body .= "Email: $email\n";
-if (!empty($phone)) {
-    $body .= "Телефон: $phone\n";
-}
-$body .= "Сообщение:\n$message\n";
+// 3. Настройка PHPMailer
+$mail = new PHPMailer(true);
 
-$headers = "From: $email\r\n";
-$headers .= "Reply-To: $email\r\n";
-$headers .= "Content-Type: text/plain; charset=utf-8\r\n";
-$headers .= "X-Mailer: PHP/" . phpversion();
+try {
+    // Настройки локальной отправки
+    $mail->isSMTP();
+    $mail->Host       = 'localhost';
+    $mail->SMTPAuth   = false; 
+    $mail->SMTPAutoTLS = false; 
+    $mail->Port       = 25; 
+    $mail->CharSet    = 'UTF-8';
 
-// 6. Отправка письма
-if (mail($to, $subject, $body, $headers)) {
-    echo json_encode(['success' => true, 'error' => '']);
-} else {
-    echo json_encode(['success' => false, 'error' => 'Ошибка при отправке письма. Попробуйте позже.']);
+    // От кого и кому
+    $mail->setFrom('info@gglim.ru', 'Сайт Green Light');
+    $mail->addAddress('info@gglim.ru'); // Ваш рабочий email
+
+    // Контент
+    $mail->isHTML(false);
+    $mail->Subject = "Новое сообщение: $name";
+    $mail->Body    = "Имя: $name\nEmail: $email\nТелефон: $phone\nСообщение:\n$message";
+
+    $mail->send();
+    echo json_encode(['success' => true]);
+
+} catch (Exception $e) {
+    // Если здесь будет ошибка "Connection failed", значит localhost:25 закрыт
+    echo json_encode(['success' => false, 'error' => 'Ошибка почтового сервера: ' . $mail->ErrorInfo]);
 }
