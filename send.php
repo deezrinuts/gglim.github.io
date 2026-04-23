@@ -3,7 +3,7 @@
 header('Content-Type: application/json; charset=utf-8');
 
 // Настройки
-$to = info@gglim.ru; // ИЗМЕНИТЕ НА СВОЙ АДРЕС
+$to = "info@gglim.ru"; // ИЗМЕНИТЕ НА СВОЙ АДРЕС
 $subject = "Новое сообщение с сайта Green Light";
 
 // 1. Проверка метода запроса
