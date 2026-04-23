@@ -1,55 +1,38 @@
 <?php
+// 1. ВКЛЮЧАЕМ ОШИБКИ ДЛЯ ТЕСТА
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// 1. Подключаем библиотеку (проверьте путь к папке!)
+// 2. ПУТИ К ФАЙЛАМ (Проверьте, что папка src внутри phpmailer)
 require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'error' => 'Неверный метод']);
-    exit;
-}
-
-// 2. Валидация данных
-$name = trim(strip_tags($_POST['name'] ?? ''));
-$email = trim(strip_tags($_POST['email'] ?? ''));
-$message = trim(strip_tags($_POST['message'] ?? ''));
-$phone = trim(strip_tags($_POST['phone'] ?? ''));
-
-if (empty($name) || empty($email) || empty($message) || !isset($_POST['privacy_agree'])) {
-    echo json_encode(['success' => false, 'error' => 'Заполните все поля и дайте согласие']);
-    exit;
-}
-
-// 3. Настройка PHPMailer
 $mail = new PHPMailer(true);
 
 try {
-    // Настройки локальной отправки
+    // Настройки для локального сервера (раз MX ведет на email.gglim.ru)
     $mail->isSMTP();
-    $mail->Host       = 'localhost';
-    $mail->SMTPAuth   = false; 
-    $mail->SMTPAutoTLS = false; 
-    $mail->Port       = 25; 
+    $mail->Host       = 'localhost'; 
+    $mail->SMTPAuth   = false;
+    $mail->Port       = 25;
     $mail->CharSet    = 'UTF-8';
 
-    // От кого и кому
-    $mail->setFrom('info@gglim.ru', 'Сайт Green Light');
-    $mail->addAddress('info@gglim.ru'); // Ваш рабочий email
+    $mail->setFrom('info@gglim.ru', 'Green Light Website');
+    $mail->addAddress('info@gglim.ru');
 
-    // Контент
-    $mail->isHTML(false);
-    $mail->Subject = "Новое сообщение: $name";
-    $mail->Body    = "Имя: $name\nEmail: $email\nТелефон: $phone\nСообщение:\n$message";
+    $mail->isHTML(true);
+    $mail->Subject = 'Новая заявка с сайта';
+    $mail->Body    = "Имя: " . $_POST['name'] . "<br>Телефон: " . $_POST['phone'];
 
     $mail->send();
     echo json_encode(['success' => true]);
 
 } catch (Exception $e) {
-    // Если здесь будет ошибка "Connection failed", значит localhost:25 закрыт
-    echo json_encode(['success' => false, 'error' => 'Ошибка почтового сервера: ' . $mail->ErrorInfo]);
+    echo json_encode(['success' => false, 'error' => $mail->ErrorInfo]);
 }
