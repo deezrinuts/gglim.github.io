@@ -3,8 +3,14 @@
 header('Content-Type: application/json; charset=utf-8');
 
 // Настройки
-$to = "info@gglim.ru"; // ИЗМЕНИТЕ НА СВОЙ АДРЕС
-$subject = "Новое сообщение с сайта Green Light";
+$mail->isSMTP();
+$mail->Host       = 'localhost';
+$mail->SMTPAuth   = false; // Отключаем авторизацию для теста
+$mail->SMTPAutoTLS = false; 
+$mail->Port       = 25; 
+
+$mail->setFrom('info@gglim.ru', 'Green Light Website');
+$mail->addAddress('info@gglim.ru');
 
 // 1. Проверка метода запроса
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
