@@ -1,5 +1,4 @@
 <?php
-// 1. Загрузка конфигурации и библиотек
 $config = require 'config.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -9,9 +8,8 @@ require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
 
-// Убираем вывод системных ошибок, чтобы не ломать JSON
-ini_set('display_errors', 0);
 header('Content-Type: application/json; charset=utf-8');
+ini_set('display_errors', 0);
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Неверный метод запроса']);
@@ -21,18 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $mail = new PHPMailer(true);
 
 try {
-    // --- Настройки сервера (SMTP) ---
     $mail->isSMTP();
     $mail->Host       = $config['smtp_host'];
     $mail->SMTPAuth   = true;
-    $mail->Username   = $config['smtp_user']; // Здесь GGLIM\info
+    
+    // Авторизация (используем домен\юзер из конфига)
+    $mail->Username   = $config['smtp_user']; 
     $mail->Password   = $config['smtp_pass'];
     
-    // Используем STARTTLS для порта 587 (стандарт Exchange)
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
     $mail->Port       = $config['smtp_port'];
 
-    // Настройки для работы с самоподписанными сертификатами Exchange
+    // Настройки для Exchange (игнорируем проблемы с сертификатами .local)
     $mail->SMTPOptions = [
         'ssl' => [
             'verify_peer' => false,
@@ -43,30 +41,24 @@ try {
 
     $mail->CharSet = 'UTF-8';
 
-    // --- Настройки отправителя и получателя ---
-    // ВАЖНО: Тут должен быть валидный email, а не GGLIM\info
+    // ВАЖНО: setFrom должен быть валидным EMAIL, а не ЛОГИНОМ
+    // Если ваш ящик info@gglim.ru, пишем его здесь вручную
     $mail->setFrom('info@gglim.ru', 'Green Light Website');
     $mail->addAddress('info@gglim.ru'); 
 
-    // --- Обработка данных формы ---
+    // Данные из формы
     $name  = trim(strip_tags($_POST['name'] ?? 'Не указано'));
     $phone = trim(strip_tags($_POST['phone'] ?? 'Не указано'));
     $msg   = trim(strip_tags($_POST['message'] ?? ''));
 
-    // --- Контент письма ---
     $mail->isHTML(true);
     $mail->Subject = "Заявка с сайта: $name";
-    $mail->Body    = "
-        <h3>Новая заявка</h3>
-        <p><b>Имя:</b> $name</p>
-        <p><b>Телефон:</b> $phone</p>
-        <p><b>Сообщение:</b><br>$msg</p>
-    ";
+    $mail->Body    = "<b>Имя:</b> $name <br><b>Телефон:</b> $phone <br><b>Сообщение:</b> $msg";
 
     $mail->send();
     echo json_encode(['success' => true]);
 
 } catch (Exception $e) {
-    // В случае ошибки возвращаем причину
+    // Если ошибка аутентификации, здесь будет текст от сервера
     echo json_encode(['success' => false, 'error' => $mail->ErrorInfo]);
 }
